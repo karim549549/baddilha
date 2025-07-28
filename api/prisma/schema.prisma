@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String?   // Make password optional for social logins
+  username      String    @unique
+  profilePicture String?
+  bio           String?
+  latitude      Float?
+  longitude     Float?
+  gamingInterests String[] @default([])
+  preferredPlatforms String[] @default([])
+  authProvider  String? // e.g., 'email', 'google', 'facebook'
+  providerId    String? // the ID from the external provider
+  emailVerified Boolean @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relationships
+  items         Item[]
+  likesGiven    Like[] @relation("LikesGiven")
+  sentMessages  Message[] @relation("SentMessages")
+  preferences   UserPreferences?
+  matchesInitiated Match[] @relation("MatchesInitiated")
+  matchesReceived Match[] @relation("MatchesReceived")
+}
+
+model UserPreferences {
+  id                  String    @id @default(uuid())
+  userId              String    @unique
+  user                User      @relation(fields: [userId], references: [id])
+  maxSwapDistanceKm   Int       @default(80)
+  preferredItemCategories String[] @default([])
+  preferredConditions String[] @default([])
+  preferredGameTitles String[] @default([])
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+model Item {
+  id              String    @id @default(uuid())
+  name            String
+  description     String?
+  condition       ItemCondition
+  photos          String[]
+  ownerId         String
+  owner           User      @relation(fields: [ownerId], references: [id])
+  category        ItemCategory
+  status          String    @default("Available")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relationships
+  likesReceived   Like[] @relation("LikesReceived")
+  matchesAsUser1Item Match[] @relation("ItemForUser1")
+  matchesAsUser2Item Match[] @relation("ItemForUser2")
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  likerId   String
+  liker     User     @relation("LikesGiven", fields: [likerId], references: [id])
+  likedItemId String
+  likedItem Item     @relation("LikesReceived", fields: [likedItemId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([likerId, likedItemId])
+}
+
+model Match { // Renamed from Swap
+  id            String    @id @default(uuid())
+  user1Id       String // User who initiated the like that led to the match
+  user1         User      @relation("MatchesInitiated", fields: [user1Id], references: [id])
+  user2Id       String // User who reciprocated the like
+  user2         User      @relation("MatchesReceived", fields: [user2Id], references: [id])
+  user1ItemId   String // Item user1 offered
+  user1Item     Item      @relation("ItemForUser1", fields: [user1ItemId], references: [id])
+  user2ItemId   String // Item user2 offered
+  user2Item     Item      @relation("ItemForUser2", fields: [user2ItemId], references: [id])
+  status        MatchStatus @default(PENDING)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relationships
+  messages      Message[]
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  matchId    String // Renamed from swapId
+  match      Match     @relation(fields: [matchId], references: [id]) // Renamed from swap
+  senderId  String
+  sender    User     @relation("SentMessages", fields: [senderId], references: [id])
+  content   String
+  createdAt DateTime @default(now())
+}
+
+enum ItemCondition {
+  NEW
+  LIKE_NEW
+  GOOD
+  FAIR
+  POOR
+}
+
+enum ItemCategory {
+  CONSOLE
+  PC_PART
+  ACCESSORY
+  GAME
+  OTHER
+}
+
+enum MatchStatus { // Renamed from SwapStatus
+  PENDING
+  ACCEPTED
+  REJECTED
+  COMPLETED
+  CANCELLED
+}
