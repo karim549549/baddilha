@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/views/homw_view.dart';
+import 'package:mobile/views/sign_in_view.dart';
 
 void main() {
   runApp(const BaddilhaApp());
@@ -12,7 +12,7 @@ class BaddilhaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomwView(),
+      home: SignInView(),
     );
   }
 }
