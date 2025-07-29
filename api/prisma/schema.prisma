@@ -13,16 +13,13 @@ datasource db {
 model User {
   id            String    @id @default(uuid())
   email         String    @unique
-  password      String?   // Make password optional for social logins
   username      String    @unique
   profilePicture String?
   bio           String?
   latitude      Float?
   longitude     Float?
-  gamingInterests String[] @default([])
-  preferredPlatforms String[] @default([])
-  authProvider  String? // e.g., 'email', 'google', 'facebook'
-  providerId    String? // the ID from the external provider
+  gamingInterests GamingInterest[] @default([])
+  preferredPlatforms GamingPlatform[] @default([])
   emailVerified Boolean @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -34,6 +31,21 @@ model User {
   preferences   UserPreferences?
   matchesInitiated Match[] @relation("MatchesInitiated")
   matchesReceived Match[] @relation("MatchesReceived")
+  accounts      Account[]
+  passkeys      Passkey[]
+}
+
+model Passkey {
+  id                String  @id @default(cuid())
+  userId            String
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  publicKey         String  @unique
+  transports        String? // Comma-separated list of transports (e.g., "internal,hybrid")
+  counter           Int
+  credentialID      String  @unique
+  credentialBackedUp Boolean @default(false)
+  createdAt         DateTime @default(now())
+  lastUsedAt        DateTime? @updatedAt
 }
 
 model UserPreferences {
@@ -58,6 +70,7 @@ model Item {
   owner           User      @relation(fields: [ownerId], references: [id])
   category        ItemCategory
   status          String    @default("Available")
+  likesCount      Int @default(0)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
@@ -106,6 +119,25 @@ model Message {
   createdAt DateTime @default(now())
 }
 
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
 enum ItemCondition {
   NEW
   LIKE_NEW
@@ -128,4 +160,29 @@ enum MatchStatus { // Renamed from SwapStatus
   REJECTED
   COMPLETED
   CANCELLED
+}
+
+enum GamingInterest {
+  ACTION
+  ADVENTURE
+  RPG
+  STRATEGY
+  SPORTS
+  SIMULATION
+  FIGHTING
+  RACING
+  PUZZLE
+  HORROR
+  OPEN_WORLD
+  // Add more as needed
+}
+
+enum GamingPlatform {
+  PC
+  PLAYSTATION
+  XBOX
+  NINTENDO_SWITCH
+  MOBILE
+  RETRO_CONSOLE
+  // Add more as needed
 }
