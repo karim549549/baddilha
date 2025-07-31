@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile/constants.dart';
-import 'package:mobile/views/custom_problem_with_sign_in.dart';
+import 'package:mobile/views/create_account_view.dart';
 import 'package:mobile/views/widgets/custom_text_button.dart';
 
 class SignInView extends StatelessWidget {
@@ -76,7 +76,7 @@ class SignInView extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return CustomProblemWithSignIn();
+                        return CreateAccountView();
                       },
                     ),
                   );

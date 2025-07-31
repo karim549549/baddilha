@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/constants.dart';
 import 'package:mobile/views/widgets/custom_text_button.dart';
 
-class CustomProblemWithSignIn extends StatelessWidget {
-  const CustomProblemWithSignIn({super.key});
+class CreateAccountView extends StatelessWidget {
+  const CreateAccountView({super.key});
 
   @override
   Widget build(BuildContext context) {
