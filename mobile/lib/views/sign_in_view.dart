@@ -20,18 +20,16 @@ class SignInView extends StatelessWidget {
           ),
         ),
         child: SingleChildScrollView(
-          
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.20),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.46),
               SvgPicture.asset(
                 "assets/images/logo+tinder.svg",
                 width: 190,
                 height: 45,
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
+                height: MediaQuery.of(context).size.height * 0.10,
               ),
               SizedBox(
                 width: 340,
