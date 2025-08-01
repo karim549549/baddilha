@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:mobile/constants.dart';
 import 'package:mobile/views/widgets/custom_text_button.dart';
 
@@ -31,7 +32,7 @@ class VerificationView extends StatelessWidget {
                 width: 250,
                 height: 50,
                 child: Text(
-                  "My number is",
+                  "My Code is",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 38.5,
@@ -42,38 +43,36 @@ class VerificationView extends StatelessWidget {
               ),
 
               SizedBox(
-                child: Text("OTP")
+                width: 107,
+                height: 24,
+                child: Text(
+                  "000000",
+                  style: TextStyle(
+                    fontSize: 19.48,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF444142),
+                    letterSpacing: -0.02,
+                  ),
+                )
               ),
 
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
               SizedBox(
-                width: 292,
-                height: 48,
-                child: RichText(
-                  text: TextSpan(
-                    text:
-                        "We will send a text with a verification code. Message and data rates may apply. ",
-                    style: TextStyle(
-                      fontSize: 13.59,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF828693),
-                      letterSpacing: -0.02,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: "Learn what happens when your number changes.",
-                        style: TextStyle(
-                          fontSize: 13.59,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF444142),
-                          letterSpacing: -0.02,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ],
+                width: 313,
+                child: OtpTextField(
+                  numberOfFields: 6,
+                  decoration: InputDecoration(
+                    border: underlineBorder,
+                    enabledBorder: underlineBorder,
+                    focusedBorder: underlineBorder,
                   ),
-                  textAlign: TextAlign.start,
+                  borderColor: Color(0xFF828693),
+                  fillColor: Color(0xFF828693),
+                  textStyle: textStyle,
+                  enabledBorderColor: Color(0xFF828693),
+                  keyboardType: TextInputType.number,
+                  
                 ),
               ),
 
@@ -84,13 +83,13 @@ class VerificationView extends StatelessWidget {
                 child: CustomTextButton(
                   textButton: "CONTINUE",
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return VerificationView();
-                        },
-                      ),
-                    );
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return ();
+                    //     },
+                    //   ),
+                    // );
                   },
                   width: 312.38,
                   height: 50.38,
