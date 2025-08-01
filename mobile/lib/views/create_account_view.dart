@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile/constants.dart';
+import 'package:mobile/views/number_view.dart';
 import 'package:mobile/views/widgets/custom_text_button.dart';
 
 class CreateAccountView extends StatelessWidget {
@@ -16,9 +17,14 @@ class CreateAccountView extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios_new_rounded),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Color(0xFF828693),
+          ),
         ),
-        title: SvgPicture.asset("assets/images/Tinder Icon.svg"),
+        title: SvgPicture.asset(
+          "assets/images/Tinder Icon.svg",
+        ),
         centerTitle: true,
       ),
       body: Center(
@@ -27,6 +33,7 @@ class CreateAccountView extends StatelessWidget {
           height: 852,
           child: Column(
             children: <Widget>[
+
               SizedBox(height: MediaQuery.of(context).size.height * 0.10),
 
               SizedBox(
@@ -37,12 +44,13 @@ class CreateAccountView extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF444142)
+                    color: Color(0xFF444142),
                   ),
                 ),
               ),
+
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-        
+
               SizedBox(
                 width: 325,
                 height: 80,
@@ -56,22 +64,40 @@ class CreateAccountView extends StatelessWidget {
                   ),
                 ),
               ),
+
               SizedBox(height: MediaQuery.of(context).size.height * 0.20),
 
               CustomTextButton(
-                textButton: "CREATE NEW ACCOUNT", 
-                onTap: (){},
+                textButton: "CREATE NEW ACCOUNT",
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return NumberView();
+                      },
+                    ),
+                  );
+                },
                 width: 273.75,
                 height: 50.38,
                 size: 18,
                 weight: FontWeight.w700,
                 gradient: LinearGradient(
-                  colors: mainColors
+                  colors: mainColors,
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), 
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 margin: null,
-              )
-          
+                shadows: <BoxShadow>[
+                  BoxShadow(
+                    offset: Offset(0, 20),
+                    blurRadius: 5.04,
+                    spreadRadius: 0,
+                    color: Color(0x00000026),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

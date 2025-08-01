@@ -10,8 +10,12 @@ class CustomTextButton extends StatelessWidget {
     required this.height,
     required this.size,
     required this.weight,
-    required this.gradient, required this.padding, required this.margin,
+    required this.gradient, 
+    required this.padding, 
+    required this.margin, 
+    required this.shadows,
   });
+
   final String textButton;
   final VoidCallback onTap;
   final double width;
@@ -21,6 +25,7 @@ class CustomTextButton extends StatelessWidget {
   final Gradient? gradient;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
+  final List<BoxShadow> shadows;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +40,7 @@ class CustomTextButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(67.18),
           border: Border.all(width: 1.34, color: Colors.white),
           gradient: gradient,
+          boxShadow: shadows,
         ),
         child: Text(
           textButton,

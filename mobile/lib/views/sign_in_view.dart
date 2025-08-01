@@ -58,6 +58,14 @@ class SignInView extends StatelessWidget {
                 gradient: null,
                 padding: EdgeInsets.only(left: 26.87, top: 14.11),
                 margin: EdgeInsets.all(3.36),
+                shadows: <BoxShadow>[
+                  BoxShadow(
+                    offset: Offset(0, 20),
+                    blurRadius: 5.04,
+                    spreadRadius: 0,
+                    color: Color(0x00000026),
+                  ),
+                ],
               ),
               CustomTextButton(
                 textButton: "SIGN IN WITH FACEBOOK",
@@ -69,6 +77,14 @@ class SignInView extends StatelessWidget {
                 gradient: null,
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16.12),
                 margin: EdgeInsets.all(3.36),
+                shadows: <BoxShadow>[
+                  BoxShadow(
+                    offset: Offset(0, 20),
+                    blurRadius: 5.04,
+                    spreadRadius: 0,
+                    color: Color(0x00000026),
+                  ),
+                ],
               ),
               CustomTextButton(
                 textButton: "SIGN IN WITH PHONE NUMBER",
@@ -88,6 +104,14 @@ class SignInView extends StatelessWidget {
                 gradient: null,
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16.12),
                 margin: EdgeInsets.all(3.36),
+                shadows: <BoxShadow>[
+                  BoxShadow(
+                    offset: Offset(0, 20),
+                    blurRadius: 5.04,
+                    spreadRadius: 0,
+                    color: Color(0x00000026),
+                  ),
+                ],
               ),
               
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
